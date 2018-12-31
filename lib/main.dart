@@ -4,7 +4,7 @@
 
 // You can read about packages here: https://flutter.io/using-packages/
 import 'package:flutter/material.dart';
-import 'package:unit_converter/category_route.dart';
+import 'category_route.dart';
 
 /// The function that is called when main.dart is run.
 void main() {
@@ -20,6 +20,15 @@ class UnitConverterApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Unit Converter',
+      theme: ThemeData(
+        textTheme: Theme.of(context).textTheme.apply(
+          bodyColor: Colors.black,
+          displayColor: Colors.grey[600],
+        ),
+        // This colors the [InputOutlineBorder] when it is selected
+        primaryColor: Colors.grey[500],
+        textSelectionHandleColor: Colors.green[500],
+      ),
       home: CategoryRoute(),
     );
   }

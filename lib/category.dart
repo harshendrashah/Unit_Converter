@@ -86,6 +86,8 @@ class Category extends StatelessWidget {
           borderRadius: _borderRadius,
           highlightColor: color,
           splashColor: color,
+          // We can use either the () => function() or the () { function(); }
+          // syntax.
           onTap: () => _navigateToConverter(context),
           child: Padding(
             padding: EdgeInsets.all(8.0),
@@ -97,12 +99,11 @@ class Category extends StatelessWidget {
               // See https://www.dartlang.org/guides/language/effective-dart/usage#do-use-collection-literals-when-possible
               children: [
                 Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Icon(
-                    iconLocation,
-                    size: 60.0,
-                  ),
-                ),
+                    padding: EdgeInsets.all(16.0),
+                    child: Icon(
+                      iconLocation,
+                      size: 60.0,
+                    )),
                 Center(
                   child: Text(
                     name,

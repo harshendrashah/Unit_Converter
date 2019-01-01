@@ -5,39 +5,27 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+import 'category.dart';
 import 'unit.dart';
 
 const _padding = EdgeInsets.all(16.0);
 
-/// [ConverterRoute] where users can input amounts to convert in one [Unit]
+/// [UnitConverter] where users can input amounts to convert in one [Unit]
 /// and retrieve the conversion in another [Unit] for a specific [Category].
-///
-/// While it is named ConverterRoute, a more apt name would be ConverterScreen,
-/// because it is responsible for the UI at the route's destination.
-class ConverterRoute extends StatefulWidget {
-  /// This [Category]'s name.
-  final String name;
+class UnitConverter extends StatefulWidget {
+  /// The current [Category] for unit conversion.
+  final Category category;
 
-  /// Color for this [Category].
-  final Color color;
-
-  /// Units for this [Category].
-  final List<Unit> units;
-
-  /// This [ConverterRoute] requires the name, color, and units to not be null.
-  const ConverterRoute({
-    @required this.name,
-    @required this.color,
-    @required this.units,
-  })  : assert(name != null),
-        assert(color != null),
-        assert(units != null);
+  /// This [UnitConverter] takes in a [Category] with [Units]. It can't be null.
+  const UnitConverter({
+    @required this.category,
+  }) : assert(category != null);
 
   @override
-  _ConverterRouteState createState() => _ConverterRouteState();
+  _UnitConverterState createState() => _UnitConverterState();
 }
 
-class _ConverterRouteState extends State<ConverterRoute> {
+class _UnitConverterState extends State<UnitConverter> {
   Unit _fromValue;
   Unit _toValue;
   double _inputValue;
@@ -52,10 +40,13 @@ class _ConverterRouteState extends State<ConverterRoute> {
     _setDefaults();
   }
 
+  // TODO: _createDropdownMenuItems() and _setDefaults() should also be called
+  // each time the user switches [Categories].
+
   /// Creates fresh list of [DropdownMenuItem] widgets, given a list of [Unit]s.
   void _createDropdownMenuItems() {
     var newItems = <DropdownMenuItem>[];
-    for (var unit in widget.units) {
+    for (var unit in widget.category.units) {
       newItems.add(DropdownMenuItem(
         value: unit.name,
         child: Container(
@@ -71,11 +62,12 @@ class _ConverterRouteState extends State<ConverterRoute> {
     });
   }
 
-  /// Sets the default values for the 'from' and 'to' [Dropdown]s.
+  /// Sets the default values for the 'from' and 'to' [Dropdown]s, and the
+  /// updated output value if a user had previously entered an input.
   void _setDefaults() {
     setState(() {
-      _fromValue = widget.units[0];
-      _toValue = widget.units[1];
+      _fromValue = widget.category.units[0];
+      _toValue = widget.category.units[1];
     });
   }
 
@@ -123,8 +115,8 @@ class _ConverterRouteState extends State<ConverterRoute> {
   }
 
   Unit _getUnit(String unitName) {
-    return widget.units.firstWhere(
-      (Unit unit) {
+    return widget.category.units.firstWhere(
+          (Unit unit) {
         return unit.name == unitName;
       },
       orElse: null,
@@ -164,8 +156,8 @@ class _ConverterRouteState extends State<ConverterRoute> {
       child: Theme(
         // This sets the color of the [DropdownMenuItem]
         data: Theme.of(context).copyWith(
-              canvasColor: Colors.grey[50],
-            ),
+          canvasColor: Colors.grey[50],
+        ),
         child: DropdownButtonHideUnderline(
           child: ButtonTheme(
             alignedDropdown: true,

@@ -175,9 +175,13 @@ class _CategoryRouteState extends State<CategoryRoute> {
     if (deviceOrientation == Orientation.portrait) {
       return ListView.builder(
         itemBuilder: (BuildContext context, int index) {
+          var _category = _categories[index];
           return CategoryTile(
-            category: _categories[index],
-            onTap: _onCategoryTap,
+            category: _category,
+            onTap:
+            _category.name == apiCategory['name'] && _category.units.isEmpty
+                ? null
+                : _onCategoryTap,
           );
         },
         itemCount: _categories.length,

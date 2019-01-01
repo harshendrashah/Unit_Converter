@@ -1,6 +1,6 @@
-# unit_converter
+# Unit Converter
 
-A new Flutter project.
+A Unit Converter app built in Flutter during Udacity's free course on [Build Native Mobile Apps with Flutter](https://www.udacity.com/course/build-native-mobile-apps-with-flutter--ud905).
 
 ## Getting Started
 
